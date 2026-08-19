@@ -1,0 +1,15 @@
+{
+  "name": "Collections teaser",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "collection_block",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "icon", "label": "Icon (emoji or text)", "default": "✨" }
+      ]
+    }
+  ],
+  "presets": [{"name":"Collections"}]
+}

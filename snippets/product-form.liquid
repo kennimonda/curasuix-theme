@@ -1,0 +1,17 @@
+{% comment %} Product form snippet used by product pages and featured-product section {% endcomment %}
+<form class="product-form ajax-product-form" method="post" action="/cart/add" accept-charset="UTF-8">
+  {% if product.variants.size > 1 %}
+    <label for="ProductSelect-{{ section.id | default: product.id }}">Variant</label>
+    <select id="ProductSelect-{{ section.id | default: product.id }}" name="id" class="product-variant-select">
+      {% for v in product.variants %}
+        <option value="{{ v.id }}">{{ v.title }}{% if v.available == false %} — Sold out{% endif %} — {{ v.price | money }}</option>
+      {% endfor %}
+    </select>
+  {% else %}
+    <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+  {% endif %}
+
+  <label>Qty <input type="number" name="quantity" value="1" min="1" class="product-quantity"></label>
+
+  <button type="submit" class="btn-cart">Add to cart — <span class="price">{{ product.variants.first.price | money }}</span></button>
+</form>

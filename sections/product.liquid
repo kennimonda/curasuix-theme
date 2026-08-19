@@ -1,0 +1,30 @@
+<section class="product-page">
+  <div class="product-card">
+    <div class="product-img">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | img_url: '800x800' }}" alt="{{ product.title }}">
+      {% else %}
+        <span class="product-img-icon">💆</span>
+      {% endif %}
+    </div>
+
+    <div class="product-info">
+      <h2>{{ product.title }}</h2>
+      <p>{{ product.description | strip_html | truncate: 400 }}</p>
+
+      <div class="price-wrap">
+        {% assign first_variant = product.variants.first %}
+        <span class="price">{{ first_variant.price | money }}</span>
+        {% if first_variant.compare_at_price and first_variant.compare_at_price > first_variant.price %}
+          <span class="price-old">{{ first_variant.compare_at_price | money }}</span>
+        {% endif %}
+      </div>
+
+      {% render 'product-form', product: product %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Product page", "presets": [{"name":"Product"}] }
+{% endschema %}

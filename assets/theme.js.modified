@@ -1,0 +1,52 @@
+// AJAX add-to-cart and FAQ toggle
+document.addEventListener('DOMContentLoaded', function() {
+  // FAQ toggle
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Refresh cart count on load
+  function refreshCartCount() {
+    fetch('/cart.js').then(function(r){ return r.json(); }).then(function(cart){
+      var el = document.getElementById('cart-count');
+      if (el) el.textContent = cart.item_count;
+    }).catch(function(){});
+  }
+  refreshCartCount();
+
+  // Handle AJAX add-to-cart for forms with class .ajax-product-form
+  document.addEventListener('submit', function(e) {
+    var form = e.target;
+    if (!form.classList.contains('ajax-product-form')) return;
+    e.preventDefault();
+
+    var submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
+
+    var formData = new FormData(form);
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      body: formData
+    }).then(function(res){
+      if (!res.ok) throw res;
+      return res.json();
+    }).then(function(item){
+      // Update cart count
+      return fetch('/cart.js');
+    }).then(function(r){ return r.json(); }).then(function(cart){
+      var el = document.getElementById('cart-count');
+      if (el) el.textContent = cart.item_count;
+      // Simple visual feedback
+      alert('Added to cart!');
+      if (submitButton) submitButton.disabled = false;
+    }).catch(function(err){
+      alert('Sorry — could not add to cart. Please try again.');
+      if (submitButton) submitButton.disabled = false;
+    });
+  });
+});
