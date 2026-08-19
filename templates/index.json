@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "hero": { "type": "hero" },
+    "featured_product": { "type": "featured-product" },
+    "vs": { "type": "vs" },
+    "collections": { "type": "collections" },
+    "reviews": { "type": "reviews" },
+    "mission": { "type": "mission" },
+    "faq": { "type": "faq" }
+  },
+  "order": ["hero","featured_product","vs","collections","reviews","mission","faq"]
+}
