@@ -1,0 +1,44 @@
+<section class="hero">
+  <div class="hero-tag">{{ section.settings.tagline }}</div>
+  <h1>{{ section.settings.title_html }}</h1>
+  <p>{{ section.settings.subtitle }}</p>
+  <div>
+    <a href="{{ section.settings.cta_url }}"><button class="btn-primary">{{ section.settings.cta_label }}</button></a>
+    {% if section.settings.cta2_label != blank %}<a href="{{ section.settings.cta2_url }}"><button class="btn-secondary">{{ section.settings.cta2_label }}</button></a>{% endif %}
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">2,400+</span>
+      <span class="stat-label">Happy customers</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4.9★</span>
+      <span class="stat-label">Average rating</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3–7</span>
+      <span class="stat-label">Day delivery</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">30</span>
+      <span class="stat-label">Day returns</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Top tag", "default": "Self care. Elevated." },
+    { "type": "textarea", "id": "title_html", "label": "Title", "default": "Your body deserves <em>better</em> tools" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Premium self care and wellness products for people who take themselves seriously. No fluff, no gimmicks. Just results." },
+    { "type": "url", "id": "cta_url", "label": "Primary CTA URL", "default": "/collections/all" },
+    { "type": "text", "id": "cta_label", "label": "Primary CTA label", "default": "Shop now" },
+    { "type": "url", "id": "cta2_url", "label": "Secondary CTA URL", "default": "/pages/about" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary CTA label", "default": "Our story" }
+  ],
+  "presets": [{"name":"Hero"}]
+}
+{% endschema %}

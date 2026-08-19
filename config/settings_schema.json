@@ -1,0 +1,8 @@
+[
+  {
+    "name": "Theme",
+    "settings": [
+      { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Curasuix" }
+    ]
+  }
+]

@@ -1,0 +1,25 @@
+<section class="vs-section">
+  <h2>Why {{ shop.name | default: 'Curasuix' }}?</h2>
+  <p class="subtitle">We're not just another online store. Here's what sets us apart.</p>
+  <table class="vs-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Generic brands</th>
+        <th>{{ shop.name | default: 'Curasuix' }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Fast US shipping (3–7 days)</td><td>✗</td><td>✓</td></tr>
+      <tr><td>Handpicked quality products</td><td>✗</td><td>✓</td></tr>
+      <tr><td>30-day hassle free returns</td><td>✗</td><td>✓</td></tr>
+      <tr><td>Real customer support</td><td>✗</td><td>✓</td></tr>
+      <tr><td>Self improvement focused</td><td>✗</td><td>✓</td></tr>
+      <tr><td>No filler products</td><td>✗</td><td>✓</td></tr>
+    </tbody>
+  </table>
+</section>
+
+{% schema %}
+{ "name": "Why us", "presets": [{"name":"Why us"}] }
+{% endschema %}

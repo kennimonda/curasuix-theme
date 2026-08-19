@@ -1,0 +1,79 @@
+{%- comment -%}
+  Semi-dynamic featured product:
+  Use the theme editor to choose a product (product picker).
+{%- endcomment -%}
+
+<section class="product-section">
+  <div class="section-label">Featured product</div>
+
+  {% if section.settings.product == blank %}
+    <p style="color:rgba(255,255,255,0.7)">Select a product in the theme editor's Featured product section.</p>
+  {% else %}
+    {% assign featured_product = all_products[section.settings.product] %}
+    {% if featured_product %}
+      {% assign variant = featured_product.variants.first %}
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-badge">{{ section.settings.badge_text }}</div>
+          {% if featured_product.featured_image %}
+            <img src="{{ featured_product.featured_image | img_url: '720x720' }}" alt="{{ featured_product.title }}">
+          {% else %}
+            <span class="product-img-icon">💆</span>
+          {% endif %}
+        </div>
+
+        <div class="product-info">
+          <h2>{{ featured_product.title }}</h2>
+          <p>{{ featured_product.description | strip_html | truncate: 220 }}</p>
+
+          <div class="price-wrap">
+            <span class="price">
+              {{ variant.price | money }}
+            </span>
+
+            {% if variant.compare_at_price and variant.compare_at_price > variant.price %}
+              <span class="price-old">{{ variant.compare_at_price | money }}</span>
+              {% assign save_amount = variant.compare_at_price | minus: variant.price %}
+              {% if variant.compare_at_price > 0 %}
+                {% assign percent = save_amount | times: 100 | divided_by: variant.compare_at_price | round %}
+                <span class="price-save">Save {{ percent }}%</span>
+              {% endif %}
+            {% endif %}
+          </div>
+
+          <div class="benefits">
+            {% for b in section.blocks %}
+              <div class="benefit">
+                <div class="benefit-check"><svg viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" stroke="#0057D9" stroke-width="1.5" fill="none"/></svg></div>
+                {{ b.settings.text }}
+              </div>
+            {% endfor %}
+          </div>
+
+          <form method="post" action="/cart/add" accept-charset="UTF-8">
+            <input type="hidden" name="id" value="{{ variant.id }}">
+            <button class="btn-cart" type="submit">Add to cart — {{ variant.price | money }}</button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <p style="color:rgba(255,255,255,0.7)">Product not found. Make sure the product is published and try again.</p>
+    {% endif %}
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Featured product",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "Best seller" }
+  ],
+  "blocks": [
+    { "type": "benefit", "name": "Benefit", "settings": [
+      { "type": "text", "id": "text", "label": "Benefit text", "default": "Deep tissue percussion therapy" }
+    ] }
+  ],
+  "presets": [{"name":"Featured product","category":"Products"}]
+}
+{% endschema %}
